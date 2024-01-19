@@ -1,0 +1,22 @@
+.nagoyameshi-login-text {
+    font-family: YuGo;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: blue;
+}
+
+.top{
+      height: 1000px;
+    background: url(../img/cooking.jpg);
+    background-size:cover;
+    color: black;
+  }
+
+.box{
+    background-color:white;
+}
+

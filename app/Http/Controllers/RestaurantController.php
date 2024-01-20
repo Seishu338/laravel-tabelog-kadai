@@ -6,6 +6,7 @@ use App\Models\Restaurant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Day;
 use Illuminate\Support\Facades\Auth;
 use Carbon\CarbonPeriod;
 use Carbon\Carbon;
@@ -19,7 +20,7 @@ class RestaurantController extends Controller
         return back();
     }
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -28,33 +29,33 @@ class RestaurantController extends Controller
     public function index(Request $request)
     {
 
-        $search=$request->input('search');
-        $category_id=$request->input('category_id');
-        $sort=$request->sort;
+        $search = $request->input('search');
+        $category_id =  $request->input('category_id');
+        $sort = $request->sort;
 
-        $query=Restaurant::query();
+        $query = Restaurant::query();
 
-        if(!empty($search)){
+        if (!empty($search)) {
             $query->where('name', 'LIKE', "%{$search}%");
         }
 
-        if(!empty($category_id)){
-            $query->where('category_id',$category_id);
+        if (!empty($category_id)) {
+            $query->where('category_id', $category_id);
         }
 
-        if($sort == 'high'){
+        if ($sort == 'high') {
             $query->orderBy('price', 'desc');
-        }elseif($sort == 'row'){
+        } elseif ($sort == 'row') {
             $query->orderBy('price', 'asc');
-        }else{
+        } else {
             $query->orderBy('id', 'asc');
         }
 
-        $restaurants=$query->paginate(15);
+        $restaurants = $query->paginate(15);
 
-        $categories=Category::all();
+        $categories = Category::all();
 
-        return view('restaurants.index', compact('restaurants','search', 'categories', 'category_id'));
+        return view('restaurants.index', compact('restaurants', 'search', 'categories', 'category_id'));
     }
 
     /**
@@ -64,8 +65,9 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        $categories =Category::all();
-        return view('restaurants.create', compact('categories'));
+        $categories = Category::all();
+        $days = Day::all();
+        return view('restaurants.create', compact('categories', 'days'));
     }
 
     /**
@@ -76,18 +78,19 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        $restaurant= New Restaurant();
-        $restaurant->category_id=$request->input('category_id');
-        $restaurant->name=$request->input('name');
-        $restaurant->description=$request->input('description');
-        $restaurant->starting_time=$request->input('starting_time');
-        $restaurant->ending_time=$request->input('ending_time');
-        $restaurant->price=$request->input('price');
-        $restaurant->postal_code=$request->input('postal_code');
-        $restaurant->address=$request->input('address');
-        $restaurant->phone=$request->input('phone');
-        $restaurant->closing_day=$request->input('closing_day');
+        $restaurant = new Restaurant();
+        $restaurant->category_id = $request->input('category_id');
+        $restaurant->name = $request->input('name');
+        $restaurant->description = $request->input('description');
+        $restaurant->starting_time = $request->input('starting_time');
+        $restaurant->ending_time = $request->input('ending_time');
+        $restaurant->price = $request->input('price');
+        $restaurant->postal_code = $request->input('postal_code');
+        $restaurant->address = $request->input('address');
+        $restaurant->phone = $request->input('phone');
         $restaurant->save();
+
+        $restaurant->closing_days()->sync($request->input('day_ids'));
 
         return to_route('restaurants.index');
     }
@@ -100,17 +103,30 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant)
     {
-        $reviews=$restaurant->reviews()->get();
+        $reviews = $restaurant->reviews()->get();
 
-        $now=Carbon::now();
+        $now = Carbon::now();
         $dt_future = Carbon::now()->addMonths(1);
-        $periods = CarbonPeriod::create($now, $dt_future)->days()->toArray();
-        $selects=[];
-        foreach($periods as $key => $value){
-            $dayofweek=$value->dayOfWeek;
-            $selects[] = $value->format('Y-m-d');
+        $periods = CarbonPeriod::create($now, $dt_future)->days();
+        $selects = [];
+        foreach ($periods as $value) {
+            $selects[] = $value;
         }
-        return view('restaurants.show', compact('restaurant', 'reviews', 'selects'));
+
+        $start = Carbon::createFromTimeString($restaurant->starting_time);
+        $end = Carbon::createFromTimeString($restaurant->ending_time)->subMinute(30);
+        $periods2 = CarbonPeriod::create($start, $end)->minutes(30);
+        $selects2 = [];
+        foreach ($periods2 as $value) {
+            $selects2[] = $value;
+        }
+
+
+        foreach ($restaurant->closing_days as $closing_day) {
+            $day_ids[] = $closing_day->pivot->day_id;
+        }
+
+        return view('restaurants.show', compact('restaurant', 'reviews', 'selects', 'selects2', 'day_ids'));
     }
 
     /**
@@ -121,9 +137,10 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        $categories =Category::all();
+        $categories = Category::all();
+        $days = Day::all();
 
-        return view('restaurants.edit', compact('restaurant', 'categories' ));
+        return view('restaurants.edit', compact('restaurant', 'categories', 'days'));
     }
 
     /**
@@ -135,17 +152,18 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-        $restaurant->category_id=$request->input('category_id');
-        $restaurant->name=$request->input('name');
-        $restaurant->description=$request->input('description');
-        $restaurant->starting_time=$request->input('starting_time');
-        $restaurant->ending_time=$request->input('ending_time');
-        $restaurant->price=$request->input('price');
-        $restaurant->postal_code=$request->input('postal_code');
-        $restaurant->address=$request->input('address');
-        $restaurant->phone=$request->input('phone');
-        $restaurant->closing_day=$request->input('closing_day');
+        $restaurant->category_id = $request->input('category_id');
+        $restaurant->name = $request->input('name');
+        $restaurant->description = $request->input('description');
+        $restaurant->starting_time = $request->input('starting_time');
+        $restaurant->ending_time = $request->input('ending_time');
+        $restaurant->price = $request->input('price');
+        $restaurant->postal_code = $request->input('postal_code');
+        $restaurant->address = $request->input('address');
+        $restaurant->phone = $request->input('phone');
         $restaurant->update();
+
+        $restaurant->closing_days()->sync($request->input('day_ids'));
 
         return to_route('restaurants.index');
     }

@@ -10,16 +10,16 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public function update_password(Request $request){
+    public function update_password(Request $request)
+    {
 
-        $user=Auth::user();
+        $user = Auth::user();
 
-        if($request->input('password') == $request->input('password_confirm')){
-            $user->password=bcrypt($request->input('password'));
+        if ($request->input('password') == $request->input('password_confirm')) {
+            $user->password = bcrypt($request->input('password'));
             $user->update();
-        }else{
-            return to_route('mypage.edit_password')->with('flash_message', 'パスワードが一致しません。');
-            ;
+        } else {
+            return to_route('mypage.edit_password')->with('flash_message', 'パスワードが一致しません。');;
         }
 
         return to_route('mypage');
@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function mypage()
     {
-        $user=Auth::user();
+        $user = Auth::user();
 
         return view('users.mypage', compact('user'));
     }
@@ -50,8 +50,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $user=Auth::user();
-        
+        $user = Auth::user();
+
         return view('users.edit', compact('user'));
     }
 
@@ -64,12 +64,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user=Auth::user();
+        $user = Auth::user();
 
-        $user->name=$request->input('name');
-        $user->email=$request->input('email');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
         $user->update();
- 
+
         return to_route('mypage');
     }
 }

@@ -9,14 +9,17 @@
     color: blue;
 }
 
-.top{
-      height: 1000px;
+.top {
+    height: 1000px;
     background: url(../img/cooking.jpg);
-    background-size:cover;
+    background-size: cover;
     color: black;
-  }
-
-.box{
-    background-color:white;
 }
 
+.box {
+    background-color: white;
+}
+
+option:disabled{
+    color:blue;
+}

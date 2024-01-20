@@ -19,6 +19,6 @@ class Restaurant extends Model
     }
 
     public function closing_days(){
-        return $this->belongsToMany(Day::class, 'closing_days');
+       return $this->belongsToMany(Day::class, 'closing_days');
     }
 }

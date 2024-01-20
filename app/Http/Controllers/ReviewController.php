@@ -12,8 +12,8 @@ class ReviewController extends Controller
 
     public function create(Request $request)
     {
-        $restaurant=$request->restaurant;
-        return view('reviews.create',['restaurant'=>$restaurant]);
+        $restaurant = $request->restaurant;
+        return view('reviews.create', ['restaurant' => $restaurant]);
     }
     /**
      * Store a newly created resource in storage.
@@ -24,18 +24,15 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' =>'required'
+            'content' => 'required'
         ]);
 
-        $review=new Review();
-        $review->content=$request->input('content');
-        $review->user_id=Auth::user()->id;
-        $review->restaurant_id=$request->input('restaurant_id');
+        $review =  new Review();
+        $review->content = $request->input('content');
+        $review->user_id = Auth::user()->id;
+        $review->restaurant_id = $request->input('restaurant_id');
         $review->save();
 
-        return to_route('restaurants.show',['restaurant' =>$review->restaurant_id]);
+        return to_route('restaurants.show', ['restaurant' => $review->restaurant_id]);
     }
-
-
-   
 }

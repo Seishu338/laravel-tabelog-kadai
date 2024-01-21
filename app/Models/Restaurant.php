@@ -10,15 +10,23 @@ class Restaurant extends Model
 {
     use HasFactory, Favoriteable;
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany(Review::class);
     }
 
-    public function closing_days(){
-       return $this->belongsToMany(Day::class, 'closing_days');
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function closing_days()
+    {
+        return $this->belongsToMany(Day::class, 'closing_days');
     }
 }

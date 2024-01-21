@@ -47,6 +47,8 @@ class RestaurantController extends Controller
             $query->orderBy('price', 'desc');
         } elseif ($sort == 'row') {
             $query->orderBy('price', 'asc');
+        } elseif ($sort == 'score') {
+            $query->orderBy('average_score', 'desc');
         } else {
             $query->orderBy('id', 'asc');
         }
@@ -104,6 +106,8 @@ class RestaurantController extends Controller
     public function show(Restaurant $restaurant)
     {
         $reviews = $restaurant->reviews()->get();
+        $average = $restaurant->average_score;
+        $staravg = round($average * 2) / 2;
 
         $now = Carbon::now();
         $dt_future = Carbon::now()->addMonths(1);
@@ -126,7 +130,7 @@ class RestaurantController extends Controller
             $day_ids[] = $closing_day->pivot->day_id;
         }
 
-        return view('restaurants.show', compact('restaurant', 'reviews', 'selects', 'selects2', 'day_ids'));
+        return view('restaurants.show', compact('restaurant', 'reviews', 'staravg', 'selects', 'selects2', 'day_ids', 'average'));
     }
 
     /**

@@ -61,6 +61,15 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
+                @if($category_id !==NULL && $search !==NULL)
+                <li><a class="dropdown-item" href="{{route('restaurants.index',['sort'=>'score','category_id'=>$category_id, 'search'=>$search])}}">評価</a></li>
+                @elseif($search !==NULL)
+                <li><a class="dropdown-item" href="{{route('restaurants.index',['sort'=>'score','search'=>$search])}}">評価順</a></li>
+                @elseif($category_id !==NULL)
+                <li><a class="dropdown-item" href="{{route('restaurants.index',['sort'=>'score', 'category_id'=>$category_id])}}">評価順</a></li>
+                @else
+                <li><a class="dropdown-item" href="{{route('restaurants.index',['sort'=>'score'])}}">評価順</a></li>
+                @endif
             </ul>
         </div>
     </div>
@@ -77,6 +86,7 @@
                         {{$restaurant->name}}<br>
                         <label>￥{{$restaurant->price}}</label>
                     </p>
+                    <p><span class="avg-score" data-id="{{round($restaurant->average_score*2)/2}}"></span>{{$restaurant->average_score}}</p>
                 </div>
             </div>
         </div>

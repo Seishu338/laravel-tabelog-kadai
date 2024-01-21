@@ -20,6 +20,77 @@
     background-color: white;
 }
 
-option:disabled{
-    color:blue;
+option:disabled {
+    color: blue;
+}
+
+.star {
+    color: gold;
+}
+
+.avg-score {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    white-space: nowrap;
+    color: #cccccc;
+}
+
+.avg-score:before,
+.avg-score:after {
+    content: "★★★★★";
+}
+
+.avg-score:after {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #ffcf32;
+}
+
+.avg-score:after {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #ffcf32;
+}
+
+.avg-score[data-id="5"]:after {
+    width: 100%;
+}
+.avg-score[data-id="4.5"]:after {
+    width: 90%;
+}
+.avg-score[data-id="4"]:after {
+    width: 80%;
+}
+.avg-score[data-id="3.5"]:after {
+    width: 70%;
+}
+.avg-score[data-id="3"]:after {
+    width: 60%;
+}
+.avg-score[data-id="2.5"]:after {
+    width: 50%;
+}
+.avg-score[data-id="2"]:after {
+    width: 40%;
+}
+.avg-score[data-id="1.5"]:after {
+    width: 30%;
+}
+.avg-score[data-id="1"]:after {
+    width: 20%;
+}
+.avg-score[data-id="0.5"]:after {
+    width: 10%;
+}
+.avg-score[data-id="0"]:after {
+    width: 0%;
 }

@@ -4,6 +4,7 @@
 <div class="container">
     <div class="mb-3">
         <h2>{{$restaurant->name}}</h2>
+        <h3><span class="avg-score" data-id="{{$staravg}}"></span>{{$restaurant->average_score}}</h3>
     </div>
     <div class="mb-2">
         <a href="{{ route('restaurants.index') }}" class="text-decoration-none">&lt; 戻る</a>
@@ -52,56 +53,80 @@
         @endif
     </div>
     <hr>
-    <div>
-        <h3>予約</h3>
-    </div>
-    <div class="d-flex justify-content-start mb-5">
-        <div class="mx-1">
-            <label>予約日</label>
-            <select class="form-control" name="">
-                <option value="">選択してください</option>
-                @foreach($selects as $value)
-                @foreach($day_ids as $day_id)
-                @if($value->dayOfWeekIso == $day_id)
-                <option value="" disabled>{{$value->format('Y-m-d')}}</option>
-                @else
-                <option value="">{{$value->format('Y-m-d')}}</option>
-                @endif
-                @endforeach
-                @endforeach
-            </select>
+    <div class="row">
+        <div>
+            <h3>予約</h3>
         </div>
-        <div class="mx-1">
-            <label>予約時間</label>
-            <select class="form-control" name="">
-                <option value="">選択してください</option>
-                @foreach($selects2 as $value)
-                <option value="">{{$value->format('H:i')}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mx-1">
-            <label>人数</label>
-            <select class="form-control" name="">
-                <option value="">選択してください</option>
-                @foreach(range(1,30) as $i)
-                <option value="">{{$i}}人</option>
-                @endforeach
-            </select>
-        </div>
+        <form action="{{route('restaurants.reservation')}}" method="post">
+            <div class="d-flex justify-content-start mb-5">
+                @csrf
+                <div class="mx-1">
+                    <label>予約日</label>
+                    <select class="form-control" name="reservations_date">
+                        <option value="">選択してください</option>
+                        @foreach($selects as $value)
+                        @foreach($day_ids as $day_id)
+                        @if($value->dayOfWeekIso == $day_id)
+                        <option value="" disabled>{{$value->format('Y-m-d')}}</option>
+                        @else
+                        <option value="{{$value}}">{{$value->format('Y-m-d')}}</option>
+                        @endif
+                        @endforeach
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mx-1">
+                    <label>予約時間</label>
+                    <select class="form-control" name="reservations_time">
+                        <option value="">選択してください</option>
+                        @foreach($selects2 as $value)
+                        <option value="{{$value}}">{{$value->format('H:i')}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mx-1">
+                    <label>人数</label>
+                    <select class="form-control" name="number">
+                        <option value="">選択してください</option>
+                        @foreach(range(1,30) as $i)
+                        <option value="{{$i}}">{{$i}}人</option>
+                        @endforeach
+                    </select>
+                </div>
+                <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
+                <div class="mx-2 my-1">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#confirmModal" class="btn btn-primary btn-lg">予約</button>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="confirmModalToggleLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalToggleLabel">予約を確定しますか？</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                            <button type="submit" class="btn btn-primary">予約</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
     <div>
         <h3>レビュー</h3>
     </div>
     <div>
-        <a class="btn btn-primary" href="{{route('reviews.create', ['restaurant'=>$restaurant->id])}}" role="button">投稿</a>
+        <a class="btn btn-primary btn-lg" href="{{route('reviews.create', ['restaurant'=>$restaurant->id])}}" role="button">投稿</a>
     </div>
     <div>
         @foreach($reviews as $review)
         <div>
             <p>{{$review->user->name}}</p>
-        </div>
-        <div>
+            <h3 class="star">{{str_repeat('★',$review->score)}}</h3>
             <p>{{$review->content}}</p>
         </div>
         <hr>

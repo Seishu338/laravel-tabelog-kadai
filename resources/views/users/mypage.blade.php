@@ -61,7 +61,7 @@
                              <p class="card-text my-1">有料会員に変更します</p>
                          </div>
                          <div class="card-footer text-center py-0">
-                             <a href="" class="btn">登録</a>
+                             <a href="{{route('subscription')}}" class="btn">登録</a>
                          </div>
                      </div>
                  </div>
@@ -72,7 +72,7 @@
                              <p class="card-text my-1">有料会員を解約します</p>
                          </div>
                          <div class="card-footer text-center py-0">
-                             <a href="" class="btn">解約</a>
+                             <a href="{{route('mypage.unsubscription')}}" class="btn">解約</a>
                          </div>
                      </div>
                  </div>

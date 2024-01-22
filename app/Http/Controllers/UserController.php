@@ -8,9 +8,19 @@ use App\Models\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
+    public function unsubscription()
+    {
+
+        $user_id = Auth::id();
+        $subscription = DB::table('subscriptions')->where('user_id', $user_id)->first();
+
+        return view('users.unsubscription', compact('subscription'));
+    }
 
     public function reservation()
     {

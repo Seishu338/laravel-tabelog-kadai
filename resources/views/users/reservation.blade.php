@@ -23,7 +23,7 @@
                 <tbody>
                     @if($reservations->isEmpty())
                     <td colspan="5">
-                        <h3>現在、予約はありません</h3>
+                        <h3>現在、予約はありません。</h3>
                     </td>
                     @endif
                     @foreach($reservations as $reservation)

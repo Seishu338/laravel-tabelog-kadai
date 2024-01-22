@@ -2,14 +2,24 @@
 @section('content')
 
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <span>
+                <a href="{{ route('mypage') }}">マイページ</a> > 有料会員登録
+            </span>
+            <h2 class="mt-3 mb-3">有料会員登録</h2>
+
+            <hr>
+        </div>
+    </div>
+    <div class="row justify-content-center my-2">
         <div class="card col-md-8">
             <form id="setup-form" action="{{ route('subscribe.post') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label>サブスクリプション商品:</label>
                     <select id="plan" name="plan" class="form-control">
-                        <option value="Stripeの商品ページにあるAPI_ID">テストプレミアムプラン</option>
+                        <option value="Stripeの商品ページにあるAPI_ID">有料会員プラン</option>
                     </select>
                 </div>
 
@@ -19,15 +29,13 @@
                         <input id="card-holder-name" class="form-control" type="text" placeholder="カード名義人">
                     </div>
                     <div id="card-element" class="w-100">
-                        <!-- A Stripe Element will be inserted here. -->
                     </div>
 
-                    <!-- Used to display form errors. -->
                     <div id="card-errors" role="alert"></div>
                 </div>
                 <input type="hidden" id="stripeToken" name="stripeToken">
 
-                <div id="card-button" data-secret="{{ $intent->client_secret }}" class="btn btn-primary mt-5" data-secret="">Submit Payment</div>
+                <div id="card-button" data-secret="{{ $intent->client_secret }}" class="btn btn-primary mt-5" data-secret="{{ $intent->client_secret }}">サブスクリプション</div>
             </form>
         </div>
     </div>

@@ -10,7 +10,8 @@
 
         <hr>
         @if($favorites->isEmpty())
-        <h3>現在、お気に入りはありません</h3>
+        <h3>現在、お気に入りはありません。
+        </h3>
         @endif
         <div class="row">
             @foreach ($favorites as $fav)

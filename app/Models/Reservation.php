@@ -18,4 +18,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+
+    protected $casts = [
+        'reservations_date' => 'datetime',
+        'reservations_time' => 'datetime',
+    ];
 }

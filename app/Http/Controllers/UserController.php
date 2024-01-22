@@ -3,12 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Restaurant;
+use App\Models\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    public function reservation()
+    {
+        $user_id = Auth::id();
+        $reservations = Reservation::where('user_id', $user_id)->get();
+
+        return view('users.reservation', compact('reservations'));
+    }
+
+    public function favorite()
+    {
+        $user = Auth::user();
+        $favorites = $user->favorites(Restaurant::class)->get();
+
+        return view('users.favorite', compact('favorites'));
+    }
+
 
     public function update_password(Request $request)
     {

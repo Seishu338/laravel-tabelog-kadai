@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,7 @@ Route::post('restaurants/reservation', [ReservationController::class, 'store'])-
 Route::delete('restaurants/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
 
 
+// サブスクリプション
 Route::get('/subscription', function () {
     return view('subscription', ['intent' => auth()->user()->createSetupIntent()]);
 })->middleware(['auth'])->name('subscription');
@@ -84,3 +86,5 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('admin/adminpage/users', 'user')->name('admin.users');
     Route::get('admin/adminpage/categories', 'category')->name('admin.categories');
 });
+
+Route::resource('categories', CategoryController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);

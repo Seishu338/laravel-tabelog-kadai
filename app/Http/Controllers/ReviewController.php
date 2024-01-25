@@ -37,7 +37,6 @@ class ReviewController extends Controller
 
         $restaurant = Restaurant::find($review->restaurant_id);
         $reviews = $restaurant->reviews()->get();
-
         $average = $reviews->avg('score');
         $average_score = round($average, 1);
         $restaurant->average_score = $average_score;

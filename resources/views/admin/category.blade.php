@@ -32,7 +32,9 @@
                         <h2 class="mt-3 mb-3">カテゴリ一覧</h2>
                     </div>
                     <div class="col-2 offset-6 position-relative">
-                        <button class="btn btn-success btn-lg position-absolute bottom-0 end-0">登録</button>
+                        <form action="{{route('categories.create')}}">
+                            <button type="submit" class="btn btn-success btn-lg position-absolute bottom-0 end-0">登録</button>
+                        </form>
                     </div>
                 </div>
                 <hr>
@@ -48,8 +50,12 @@
                     <tbody>
                         <td>{{$category->id}}</td>
                         <td>{{$category->name}}</td>
-                        <td>編集</td>
-                        <td>削除</td>
+                        <td><a href="{{route('categories.edit', $category)}}">編集</a></td>
+                        <form action="{{route('categories.destroy', $category)}}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <td><button type="submit" class="btn btn-danger">削除</button></td>
+                        </form>
                     </tbody>
                     @endforeach
                 </table>

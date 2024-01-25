@@ -80,6 +80,19 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'starting_time' => 'required',
+            'ending_time' => 'required',
+            'price' => 'required',
+            'postal_code' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'day_ids' => 'required | array'
+        ]);
+
         $restaurant = new Restaurant();
         $restaurant->category_id = $request->input('category_id');
         $restaurant->name = $request->input('name');
@@ -156,6 +169,19 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'starting_time' => 'required',
+            'ending_time' => 'required',
+            'price' => 'required',
+            'postal_code' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'day_ids' => 'required | array'
+        ]);
+
         $restaurant->category_id = $request->input('category_id');
         $restaurant->name = $request->input('name');
         $restaurant->description = $request->input('description');
@@ -169,7 +195,7 @@ class RestaurantController extends Controller
 
         $restaurant->closing_days()->sync($request->input('day_ids'));
 
-        return to_route('restaurants.index');
+        return to_route('admin.restaurants');
     }
 
     /**
@@ -182,6 +208,6 @@ class RestaurantController extends Controller
     {
         $restaurant->delete();
 
-        return to_route('restaurants.index');
+        return to_route('admin');
     }
 }

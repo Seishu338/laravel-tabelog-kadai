@@ -10,10 +10,15 @@
 }
 
 .top {
-    height: 1000px;
     background: url(../img/cooking.jpg);
-    background-size: cover;
-    color: black;
+    background-size: cover; /* 画像のサイズを指定    */
+    width: 100%; /* 横幅のサイズを指定    */
+    height: 800px;
+}
+
+.title {
+    text-align: center;
+    background-color: #ffffff;
 }
 
 .box {
@@ -24,6 +29,7 @@ option:disabled {
     color: blue;
 }
 
+/* 評価星 */
 .star {
     color: gold;
 }

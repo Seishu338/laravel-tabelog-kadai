@@ -26,8 +26,8 @@
         @endcomponent
         <main>
             <div class="top">
-                <div class="title">
-                    <h1>NAGOYAMESHI</h1>
+                <div class="position-absolute top-50 start-50 translate-middle main-title">
+                    <h1><a href="{{route('restaurants.index')}}" class="link-white">NAGOYAMESHI</a></h1>
                 </div>
             </div>
         </main>

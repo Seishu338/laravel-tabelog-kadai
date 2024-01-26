@@ -67,9 +67,17 @@ class RestaurantController extends Controller
      */
     public function create()
     {
+        $start = Carbon::createFromTimeString('00:00:00');
+        $end = Carbon::createFromTimeString('23:00:00');
+        $periods = CarbonPeriod::create($start, $end)->hours(1);
+        $times = [];
+        foreach ($periods as $value) {
+            $times[] = $value;
+        }
+
         $categories = Category::all();
         $days = Day::all();
-        return view('restaurants.create', compact('categories', 'days'));
+        return view('restaurants.create', compact('categories', 'days', 'times'));
     }
 
     /**
@@ -157,7 +165,22 @@ class RestaurantController extends Controller
         $categories = Category::all();
         $days = Day::all();
 
-        return view('restaurants.edit', compact('restaurant', 'categories', 'days'));
+        $start = Carbon::createFromTimeString('00:00:00');
+        $end = Carbon::createFromTimeString('23:00:00');
+        $periods = CarbonPeriod::create($start, $end)->hours(1);
+        $times = [];
+        foreach ($periods as $value) {
+            $times[] = $value;
+        }
+
+        $startingtime = Carbon::createFromTimeString($restaurant->starting_time);
+        $endingtime = Carbon::createFromTimeString($restaurant->ending_time);
+
+        foreach ($restaurant->closing_days as $closing_day) {
+            $closing_days[] = $closing_day->pivot->day_id;
+        }
+
+        return view('restaurants.edit', compact('restaurant', 'categories', 'days', 'times', 'startingtime', 'endingtime', 'closing_days'));
     }
 
     /**

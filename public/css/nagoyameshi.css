@@ -16,17 +16,32 @@
     height: 800px;
 }
 
-.title {
+.main-title {
+    background-color: green;
+    font-weight: bold;
+    width: 100%;
+    height: 100px;
     text-align: center;
-    background-color: #ffffff;
+}
+
+.top h1 {
+    font-size: 60px;
+}
+
+.top a {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .box {
     background-color: white;
 }
 
+option {
+    font-weight: bold;
+}
 option:disabled {
-    color: blue;
+    font-weight: lighter;
 }
 
 /* 評価星 */

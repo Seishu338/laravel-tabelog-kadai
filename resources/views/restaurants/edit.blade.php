@@ -63,8 +63,11 @@
                 <div class="@error('starting_time') is-invalid @enderror">
                   <select class="form-control" name="starting_time">
                     <option value="">選択してください</option>
-                    @foreach(range(1,24) as $i)
-                    <option value="{{$i*10000}}">{{$i}}時</option>
+                    @foreach($times as $i)
+                    @if($i==$startingtime)
+                    <option value="{{$i}}" selected>{{$i->format('H:i')}}</option>
+                    @endif
+                    <option value="{{$i}}">{{$i->format('H:i')}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -81,8 +84,11 @@
                 <div class="@error('ending_time') is-invalid @enderror">
                   <select class="form-control" name="ending_time">
                     <option value="">選択してください</option>
-                    @foreach(range(1,24) as $i)
-                    <option value="{{$i*10000}}">{{$i}}時</option>
+                    @foreach($times as $i)
+                    @if($i==$endingtime)
+                    <option value="{{$i}}" selected>{{$i->format('H:i')}}</option>
+                    @endif
+                    <option value="{{$i}}">{{$i->format('H:i')}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -141,10 +147,17 @@
               <label for="closing_day" class="col-md-4 col-form-label text-md-end">定休日</label>
               <div class="col-md-6">
                 @foreach($days as $day )
+                @if(in_array($day->id, $closing_days))
+                <div class="form-check  form-check-inline @error('day_ids') is-invalid @enderror">
+                  <input class="form-check-input" type="checkbox" name="day_ids[]" value="{{$day->id}}" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">{{$day->name}}</label>
+                </div>
+                @else
                 <div class="form-check  form-check-inline @error('day_ids') is-invalid @enderror">
                   <input class="form-check-input" type="checkbox" name="day_ids[]" value="{{$day->id}}" id="flexCheckDefault">
                   <label class="form-check-label" for="flexCheckDefault">{{$day->name}}</label>
                 </div>
+                @endif
                 @endforeach
                 @error('day_ids')
                 <span class="invalid-feedback" role="alert">

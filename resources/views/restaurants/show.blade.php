@@ -3,11 +3,11 @@
 
 <div class="container">
     <div class="mb-3">
+        <a href="{{ route('restaurants.index') }}" class="text-decoration-none">&lt; 戻る</a>
+    </div>
+    <div class="mb-3">
         <h2>{{$restaurant->name}}</h2>
         <h3><span class="avg-score" data-id="{{$staravg}}"></span>{{$restaurant->average_score}}</h3>
-    </div>
-    <div class="mb-2">
-        <a href="{{ route('restaurants.index') }}" class="text-decoration-none">&lt; 戻る</a>
     </div>
     <div class="row">
         <div class="col-lg-4">
@@ -27,7 +27,7 @@
                 </p>
             </div>
             <div>
-                <p><span>営業時間：</span> {{$restaurant->starting_time}}～{{$restaurant->ending_time}}</p>
+                <p><span>営業時間：</span> {{date('H:i', strtotime($restaurant->starting_time))}}～{{date('H:i', strtotime($restaurant->ending_time))}}</p>
             </div>
             <div>
                 <p><span>定休日：</span> @foreach($restaurant->closing_days as $closing_day)　{{$closing_day->name}}@endforeach</p>

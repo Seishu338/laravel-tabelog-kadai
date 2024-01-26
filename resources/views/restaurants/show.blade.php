@@ -65,11 +65,13 @@
                     <select class="form-control @error('reservations_date') is-invalid @enderror" required name="reservations_date">
                         <option value="">選択してください</option>
                         @foreach($selects as $value)
-                        @if(in_array($value->dayOfWeekIso, $day_ids))
+                        @foreach($day_ids as $day_id)
+                        @if($value->dayOfWeekIso == $day_id)
                         <option value="" disabled>{{$value->format('Y-m-d')}}</option>
                         @else
                         <option value="{{$value}}">{{$value->format('Y-m-d')}}</option>
                         @endif
+                        @endforeach
                         @endforeach
                     </select>
                     @error('reservations_date')

@@ -32,9 +32,7 @@
                         <h2 class="mt-3 mb-3">店舗一覧</h2>
                     </div>
                     <div class="col-2 offset-6 position-relative">
-                        <form action="{{route('restaurants.create')}}">
-                            <button type="submit" class="btn btn-success btn-lg position-absolute bottom-0 end-0">登録</button>
-                        </form>
+                        <button class="btn btn-success btn-lg position-absolute bottom-0 end-0">登録</button>
                     </div>
                 </div>
                 <hr>
@@ -55,13 +53,9 @@
                         <td>{{$restaurant->name}}</td>
                         <td>〒{{$restaurant->postal_code}}　{{$restaurant->address}}</td>
                         <td>{{$restaurant->phone}}</td>
-                        <td><a href="">詳細</a></td>
-                        <td><a href="{{route('restaurants.edit', $restaurant)}}">編集</a></td>
-                        <form action="{{route('restaurants.destroy', $restaurant)}}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <td><button type="submit" class="btn btn-danger">削除</button></td>
-                        </form>
+                        <td>詳細</td>
+                        <td>編集</td>
+                        <td>削除</td>
                     </tbody>
                     @endforeach
                 </table>

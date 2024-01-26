@@ -3,7 +3,7 @@
 <div class="container">
     <h1 class="my-3">レビュー投稿</h1>
     <div class="mb-2">
-        <a href="{{route('restaurants.show',$restaurant)}}" class="text-decoration-none">&lt; 戻る</a>
+        <a href="#" class="text-decoration-none" onclick="history.back();">&lt; 戻る</a>
     </div>
 
     <form action="{{ route('reviews.store') }}" method="post">

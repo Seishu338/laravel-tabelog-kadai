@@ -62,7 +62,7 @@
                 @csrf
                 <div class="mx-1">
                     <label>予約日</label>
-                    <select class="form-control @error('reservations_date') is-invalid @enderror" required name="reservations_date">
+                    <select class="form-control" name="reservations_date">
                         <option value="">選択してください</option>
                         @foreach($selects as $value)
                         @foreach($day_ids as $day_id)
@@ -74,42 +74,24 @@
                         @endforeach
                         @endforeach
                     </select>
-                    @error('reservations_date')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
                 </div>
                 <div class="mx-1">
                     <label>予約時間</label>
-                    <select class="form-control @error('reservations_time') is-invalid @enderror" required name="reservations_time">
+                    <select class="form-control" name="reservations_time">
                         <option value="">選択してください</option>
                         @foreach($selects2 as $value)
                         <option value="{{$value}}">{{$value->format('H:i')}}</option>
                         @endforeach
                     </select>
-                    @error('reservations_time')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
                 </div>
                 <div class="mx-1">
                     <label>人数</label>
-                    <select class="form-control @error('number') is-invalid @enderror" required name="number">
+                    <select class="form-control" name="number">
                         <option value="">選択してください</option>
                         @foreach(range(1,30) as $i)
                         <option value="{{$i}}">{{$i}}人</option>
                         @endforeach
                     </select>
-                    @error('number')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
                 </div>
                 <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
                 <div class="mx-2 my-1">

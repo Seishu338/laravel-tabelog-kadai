@@ -21,7 +21,7 @@ class ReservationController extends Controller
         $reservation->number = $request->input('number');
         $reservation->save();
 
-        return to_route('mypage.reservation');
+        return back();
     }
 
     public function destroy(Reservation $reservation)

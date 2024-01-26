@@ -5,7 +5,6 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,23 +63,11 @@ Route::post('/user/subscribe', function (Request $request) {
 Route::post('/subscription/cancel', function () {
     $user = Auth::user();
     $user->subscription('default')->cancel();
-    return back();
+    return to_route('mypage');
 })->name('stripe.cancel');
 
 Route::post('/subscription/resume', function () {
     $user = Auth::user();
     $user->subscription('default')->resume();
-    return back();
+    return to_route('mypage');
 })->name('stripe.resume');
-
-
-
-// 管理者
-
-
-Route::controller(AdminController::class)->group(function () {
-    Route::get('admin/adminpage', 'admin')->name('admin');
-    Route::get('admin/adminpage/restaurants', 'restaurant')->name('admin.restaurants');
-    Route::get('admin/adminpage/users', 'user')->name('admin.users');
-    Route::get('admin/adminpage/categories', 'category')->name('admin.categories');
-});

@@ -59,8 +59,8 @@
                 <div class="@error('starting_time') is-invalid @enderror">
                   <select class="form-control" name="starting_time">
                     <option value="">選択してください</option>
-                    @foreach($times as $i)
-                    <option value="{{$i}}">{{$i->format('H:i')}}</option>
+                    @foreach(range(1,24) as $i)
+                    <option value="{{$i*10000}}">{{$i}}時</option>
                     @endforeach
                   </select>
                 </div>
@@ -77,8 +77,8 @@
                 <div class="@error('ending_time') is-invalid @enderror">
                   <select class="form-control" name="ending_time">
                     <option value="">選択してください</option>
-                    @foreach($times as $i)
-                    <option value="{{$i}}">{{$i->format('H:i')}}</option>
+                    @foreach(range(1,24) as $i)
+                    <option value="{{$i*10000}}">{{$i}}時</option>
                     @endforeach
                   </select>
                 </div>

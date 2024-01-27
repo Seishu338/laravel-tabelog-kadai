@@ -60,55 +60,6 @@ class RestaurantController extends Controller
         return view('restaurants.index', compact('restaurants', 'search', 'categories', 'category_id'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $categories = Category::all();
-        $days = Day::all();
-        return view('restaurants.create', compact('categories', 'days'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'category_id' => 'required',
-            'starting_time' => 'required',
-            'ending_time' => 'required',
-            'price' => 'required',
-            'postal_code' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
-            'day_ids' => 'required | array'
-        ]);
-
-        $restaurant = new Restaurant();
-        $restaurant->category_id = $request->input('category_id');
-        $restaurant->name = $request->input('name');
-        $restaurant->description = $request->input('description');
-        $restaurant->starting_time = $request->input('starting_time');
-        $restaurant->ending_time = $request->input('ending_time');
-        $restaurant->price = $request->input('price');
-        $restaurant->postal_code = $request->input('postal_code');
-        $restaurant->address = $request->input('address');
-        $restaurant->phone = $request->input('phone');
-        $restaurant->save();
-
-        $restaurant->closing_days()->sync($request->input('day_ids'));
-
-        return to_route('restaurants.index');
-    }
 
     /**
      * Display the specified resource.
@@ -152,49 +103,4 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Http\Response
      */
-    public function edit(Restaurant $restaurant)
-    {
-        $categories = Category::all();
-        $days = Day::all();
-
-        return view('restaurants.edit', compact('restaurant', 'categories', 'days'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Restaurant  $restaurant
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Restaurant $restaurant)
-    {
-        $restaurant->category_id = $request->input('category_id');
-        $restaurant->name = $request->input('name');
-        $restaurant->description = $request->input('description');
-        $restaurant->starting_time = $request->input('starting_time');
-        $restaurant->ending_time = $request->input('ending_time');
-        $restaurant->price = $request->input('price');
-        $restaurant->postal_code = $request->input('postal_code');
-        $restaurant->address = $request->input('address');
-        $restaurant->phone = $request->input('phone');
-        $restaurant->update();
-
-        $restaurant->closing_days()->sync($request->input('day_ids'));
-
-        return to_route('restaurants.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Restaurant  $restaurant
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Restaurant $restaurant)
-    {
-        $restaurant->delete();
-
-        return to_route('restaurants.index');
-    }
 }

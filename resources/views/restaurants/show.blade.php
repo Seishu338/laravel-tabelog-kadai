@@ -3,11 +3,11 @@
 
 <div class="container">
     <div class="mb-3">
+        <a href="{{ route('restaurants.index') }}" class="text-decoration-none">&lt; 戻る</a>
+    </div>
+    <div class="mb-3">
         <h2>{{$restaurant->name}}</h2>
         <h3><span class="avg-score" data-id="{{$staravg}}"></span>{{$restaurant->average_score}}</h3>
-    </div>
-    <div class="mb-2">
-        <a href="{{ route('restaurants.index') }}" class="text-decoration-none">&lt; 戻る</a>
     </div>
     <div class="row">
         <div class="col-lg-4">
@@ -27,7 +27,7 @@
                 </p>
             </div>
             <div>
-                <p><span>営業時間：</span> {{$restaurant->starting_time}}～{{$restaurant->ending_time}}</p>
+                <p><span>営業時間：</span> {{date('H:i', strtotime($restaurant->starting_time))}}～{{date('H:i', strtotime($restaurant->ending_time))}}</p>
             </div>
             <div>
                 <p><span>定休日：</span> @foreach($restaurant->closing_days as $closing_day)　{{$closing_day->name}}@endforeach</p>
@@ -62,36 +62,50 @@
                 @csrf
                 <div class="mx-1">
                     <label>予約日</label>
-                    <select class="form-control" name="reservations_date">
+                    <select class="form-control @error('reservations_date') is-invalid @enderror" required name="reservations_date">
                         <option value="">選択してください</option>
                         @foreach($selects as $value)
-                        @foreach($day_ids as $day_id)
-                        @if($value->dayOfWeekIso == $day_id)
+                        @if(in_array($value->dayOfWeekIso, $day_ids))
                         <option value="" disabled>{{$value->format('Y-m-d')}}</option>
                         @else
                         <option value="{{$value}}">{{$value->format('Y-m-d')}}</option>
                         @endif
                         @endforeach
-                        @endforeach
                     </select>
+                    @error('reservations_date')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="mx-1">
                     <label>予約時間</label>
-                    <select class="form-control" name="reservations_time">
+                    <select class="form-control  @error('reservations_time') is-invalid @enderror" required name="reservations_time">
                         <option value="">選択してください</option>
                         @foreach($selects2 as $value)
                         <option value="{{$value}}">{{$value->format('H:i')}}</option>
                         @endforeach
                     </select>
+                    </select>
+                    @error('reservations_time')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="mx-1">
                     <label>人数</label>
-                    <select class="form-control" name="number">
+                    <select class="form-control @error('number') is-invalid @enderror" required name="number">
                         <option value="">選択してください</option>
                         @foreach(range(1,30) as $i)
                         <option value="{{$i}}">{{$i}}人</option>
                         @endforeach
                     </select>
+                    @error('number')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
                 <div class="mx-2 my-1">

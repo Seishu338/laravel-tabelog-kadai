@@ -80,6 +80,19 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'category_id' => 'required',
+            'starting_time' => 'required',
+            'ending_time' => 'required',
+            'price' => 'required',
+            'postal_code' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'day_ids' => 'required | array'
+        ]);
+
         $restaurant = new Restaurant();
         $restaurant->category_id = $request->input('category_id');
         $restaurant->name = $request->input('name');

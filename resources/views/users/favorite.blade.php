@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-md-2 d-flex align-items-center justify-content-end">
-                <a href="{{}}" class="samuraimart-favorite-item-delete">
+                <a href="{{ route('restaurants.favorite', $fav->favoriteable_id) }}">
                     削除
                 </a>
             </div>

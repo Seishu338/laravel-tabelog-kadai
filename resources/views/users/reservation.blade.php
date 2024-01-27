@@ -36,7 +36,23 @@
                             <form action="{{ route('reservation.destroy', $reservation) }}" method="POST">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-danger">削除</button>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{$reservation->id}}" class="btn btn-danger">削除</button>
+                                <div class="modal fade" id="deleteModal{{$reservation->id}}" data-bs-backdrop="static" tabindex="-1" aria-labelledby="deleteModalToggleLabel{{$reservation->id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalToggleLabel{{$reservation->id}}">予約を削除しますか？</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                                                <button type="submit" class="btn btn-danger">削除</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </td>
                     </tr>

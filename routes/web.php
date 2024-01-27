@@ -63,7 +63,7 @@ Route::post('/user/subscribe', function (Request $request) {
 Route::post('/subscription/cancel', function () {
     $user = Auth::user();
     $user->subscription('default')->cancel();
-    return to_route('mypage');
+    return to_route('mypage');;
 })->name('stripe.cancel');
 
 Route::post('/subscription/resume', function () {

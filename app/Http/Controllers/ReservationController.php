@@ -28,6 +28,6 @@ class ReservationController extends Controller
     {
         $reservation->delete();
 
-        return back();
+        return to_route('mypage.reservation');
     }
 }

@@ -12,7 +12,12 @@
     <div class="row">
         <div class="col-lg-4">
             <a href="{{route('restaurants.show', $restaurant)}}">
-                <img src="{{ asset('img/dummy.jpg')}}" class="w-100">
+                @if ($restaurant->image !== "")
+                <img src="{{ asset($restaurant->image)}}" class="img-thumbnail">
+                @else
+                <img src="{{ asset('img/dummy.jpg')}}" class="img-thumbnail">
+                @endif
+            </a>
             </a>
         </div>
         <div class="col-lg-8 show-items">

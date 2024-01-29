@@ -29,6 +29,10 @@
                 <div class="position-absolute top-50 start-50 translate-middle main-title">
                     <h1><a href="{{route('restaurants.index')}}" class="link-white">NAGOYAMESHI</a></h1>
                 </div>
+                <div class="position-absolute end-0">
+                    <a style="color:blue;" href="https://jp.freepik.com/free-photo/pen-on-blank-spiral-notepad-surrounded-with-thai-traditional-food-on-wooden-table_4273375.htm?query=%E6%96%99%E7%90%86%20%E4%BF%AF%E7%9E%B0#from_view=detail_alsolike">img byFreepik</a>
+                </div>
+            </div>
         </main>
         @component('components.footer')
         @endcomponent

@@ -77,9 +77,9 @@
                 <div class="col-12 col-md-6 restaurant-img">
                     <a href="{{route('restaurants.show', $restaurant)}}">
                         @if ($restaurant->image !== "")
-                        <img src="{{ asset($restaurant->image)}}">
+                        <img src="{{ asset($restaurant->image)}}" class="img-thumbnail">
                         @else
-                        <img src="{{ asset('img/dummy.jpg')}}">
+                        <img src="{{ asset('img/dummy.jpg')}}" class="img-thumbnail">
                         @endif
                     </a>
                 </div>

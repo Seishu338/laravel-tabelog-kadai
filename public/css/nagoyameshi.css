@@ -9,6 +9,10 @@
     color: blue;
 }
 
+main {
+    background-color: snow;
+}
+
 .top {
     background: url(../img/cooking.jpg);
     background-size: cover; /* 画像のサイズを指定    */
@@ -39,6 +43,39 @@ option {
 
 option:disabled {
     font-weight: lighter;
+}
+
+.restaurant-s {
+    background-color: ghostwhite;
+}
+
+.restaurant-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.restaurant-score {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.restaurant-img img {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #ddd;
+    object-fit: cover;
+}
+
+.show-item {
+    font-weight: bold;
+}
+
+.show-items {
+    font-size: 16px;
+}
+.review-name {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 /* 評価星 */

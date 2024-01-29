@@ -68,11 +68,11 @@
                  <div class="col">
                      <div class="card">
                          <div class="card-body text-center">
-                             <h3 class="card-title">有料会員解約</h3>
-                             <p class="card-text my-1">有料会員を解約します</p>
+                             <h3 class="card-title">有料会員解約/再開</h3>
+                             <p class="card-text my-1">有料会員を解約/再開します</p>
                          </div>
                          <div class="card-footer text-center py-0">
-                             <a href="{{route('mypage.unsubscription')}}" class="btn">解約</a>
+                             <a href="{{route('mypage.unsubscription')}}" class="btn">解約/再開</a>
                          </div>
                      </div>
                  </div>

@@ -1,14 +1,10 @@
 @extends('layouts.app')
 @section('content')
-
-<div class="container-fluid img-hidden">
-    <img src="" class="img-fulied">
-</div>
 <div class="container">
     <div class="row">
         <div class="col-6 offset-3">
             <form action="{{route('restaurants.index')}}">
-                <div class="form-group row">
+                <div class="form-group row my-2">
                     <div class="col-5">
                         <input type="text" class="form-control" name="search" value="{{$search}}" class="form-control" placeholder="店名">
                     </div>
@@ -33,7 +29,7 @@
     </div>
     <div class="">
         <div class="dropdown">
-            <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 並び替え
             </button>
             <ul class="dropdown-menu">
@@ -76,23 +72,35 @@
 
     <div class="row">
         @foreach($restaurants as $restaurant)
-        <div class="col-4">
-            <a href="{{route('restaurants.show', $restaurant)}}">
-                <img src="{{ asset('img/dummy.jpg')}}" class="img-thumbnail">
-            </a>
-            <div class="row">
-                <div class="col-12">
-                    <p class="mt-2">
-                        {{$restaurant->name}}<br>
-                        <label>￥{{$restaurant->price}}</label>
-                    </p>
-                    <p><span class="avg-score" data-id="{{round($restaurant->average_score*2)/2}}"></span>{{$restaurant->average_score}}</p>
+        <div class="col-12 col-md-6 my-2 p-2">
+            <div class="row restaurant-s">
+                <div class="col-12 col-md-6 restaurant-img">
+                    <a href="{{route('restaurants.show', $restaurant)}}">
+                        @if ($restaurant->image !== "")
+                        <img src="{{ asset($restaurant->image)}}">
+                        @else
+                        <img src="{{ asset('img/dummy.jpg')}}">
+                        @endif
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="mt-2 restaurant-name">{{$restaurant->name}} </p>
+                            <p style="font-size:16px;">{{$restaurant->address}}&nbsp;/&nbsp;{{$restaurant->category->name}}</p>
+                            <p style="font-size:16px;">￥{{$restaurant->price}}~</p>
+                            <p class="mt-2 restaurant-score"><span class="avg-score" data-id="{{round($restaurant->average_score*2)/2}}"></span>{{$restaurant->average_score}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <hr>
         </div>
         @endforeach
     </div>
-    {{ $restaurants->links() }}
+    <div class="d-flex justify-content-center">
+        {{ $restaurants->links() }}
+    </div>
 </div>
 
 @endsection

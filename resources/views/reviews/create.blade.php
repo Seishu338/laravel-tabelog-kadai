@@ -20,9 +20,11 @@
         </div>
         <div class="form-group mb-3">
             <label for="content">本文</label>
-            <textarea class="form-control" name="content"></textarea>
+            <textarea class="form-control @error('content') is-invalid @enderror" name="content"></textarea>
             @error('content')
-            <strong>レビューを入力してください</strong>
+            <span class="invalid-feedback" role="alert">
+                <strong>レビュー内容を入力してください</strong>
+            </span>
             @enderror
         </div>
         <input type="hidden" name="restaurant_id" value="{{$restaurant}}">

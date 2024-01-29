@@ -41,6 +41,10 @@ class UserController extends Controller
 
     public function update_password(Request $request)
     {
+        $request->validate([
+            'password' => 'required',
+            'password_confirm' => 'required'
+        ]);
 
         $user = Auth::user();
 
@@ -93,6 +97,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required'
+        ]);
+
         $user = Auth::user();
 
         $user->name = $request->input('name');

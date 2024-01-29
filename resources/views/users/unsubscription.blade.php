@@ -16,7 +16,8 @@
         <div class="col-10 offset-1 d-flex justify-content-center">
             @if($subscription->ends_at !==NULL)
             <div>
-                <h2>有料会員再開</h2>
+                <h2 class="text-center">有料会員再開</h2>
+                <p class="text-center" style="font-size:16px;"> 現在、あなたは有料会員プランを停止中です。<br>再開しますか？</p>
                 <form method="POST" action="{{route('stripe.resume')}}" class="text-center">
                     @csrf
                     <button type="submit" class="btn btn-success btn-lg mt-2">再開する</button>
@@ -24,7 +25,8 @@
             </div>
             @else
             <div>
-                <h2>有料会員退会</h2>
+                <h2 class="text-center">有料会員解約</h2>
+                <p class="text-center" style="font-size:20px; font-weight:bold;"> 現在、あなたは有料会員です。<br>有料会員プランを停止しますか？</p>
                 <form method="POST" action="{{route('stripe.cancel')}}" class="text-center">
                     @csrf
                     <button type="button" data-bs-toggle="modal" data-bs-target="#unsubscriptionModal" class="btn btn-danger btn-lg mt-2">退会する</button>
@@ -32,7 +34,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="unsubscriptionModalToggleLabel">有料会員を退会しますか？</h5>
+                                    <h5 class="modal-title" id="unsubscriptionModalToggleLabel" style="font-size:20px; font-weight:bold;">本当に有料会員プランを停止しますか？</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

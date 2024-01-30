@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\restaurant;
+use App\Models\Restaurant;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;

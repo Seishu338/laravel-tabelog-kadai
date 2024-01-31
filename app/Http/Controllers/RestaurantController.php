@@ -122,7 +122,7 @@ class RestaurantController extends Controller
         $average = $restaurant->average_score;
         $staravg = round($average * 2) / 2;
 
-        $now = Carbon::now();
+        $now = Carbon::now()->addDays(1);
         $dt_future = Carbon::now()->addMonths(1);
         $periods = CarbonPeriod::create($now, $dt_future)->days();
         $selects = [];

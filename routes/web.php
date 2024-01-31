@@ -23,8 +23,14 @@ Route::get('/', function () {
     return view('top.index');
 });
 
+Auth::routes(['verify' => true]);
+Route::resource('restaurants', RestaurantController::class)->middleware(['auth', 'verified']);
+Route::get('restaurants/{restaurant}/favorite', [RestaurantController::class, 'favorite'])->name('restaurants.favorite')->middleware(['StripeMiddleware']);;
+Route::post('restaurants/reservation', [ReservationController::class, 'store'])->name('restaurants.reservation')->middleware(['StripeMiddleware']);;
+Route::delete('restaurants/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+
 Route::controller(UserController::class)->group(function () {
-    Route::get('users/mypage', 'mypage')->name('mypage');
+    Route::get('users/mypage', 'mypage')->name('mypage')->middleware(['auth', 'verified']);
     Route::get('users/mypage/edit', 'edit')->name('mypage.edit');
     Route::put('users/mypage', 'update')->name('mypage.update');
     Route::get('users/mypage/password/edit', 'edit_password')->name('mypage.edit_password');
@@ -39,11 +45,7 @@ Route::controller(ReviewController::class)->group(function () {
     Route::post('reviews', 'store')->name('reviews.store')->middleware(['StripeMiddleware']);;
 });
 
-Auth::routes(['verify' => true]);
-Route::resource('restaurants', RestaurantController::class)->middleware(['auth', 'verified']);
-Route::get('restaurants/{restaurant}/favorite', [RestaurantController::class, 'favorite'])->name('restaurants.favorite')->middleware(['StripeMiddleware']);;
-Route::post('restaurants/reservation', [ReservationController::class, 'store'])->name('restaurants.reservation')->middleware(['StripeMiddleware']);;
-Route::delete('restaurants/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+
 
 
 Route::get('/subscription', function () {

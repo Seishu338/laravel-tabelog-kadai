@@ -14,7 +14,7 @@ main {
 }
 
 .top {
-    background: url(../img/cooking.jpg);
+    background: url(../img/cooking.png);
     background-size: cover; /* 画像のサイズを指定    */
     width: 100%; /* 横幅のサイズを指定    */
     height: 800px;
